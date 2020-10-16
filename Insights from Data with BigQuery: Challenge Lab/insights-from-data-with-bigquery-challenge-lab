@@ -36,11 +36,10 @@ ORDER BY total_confirmed_cases DESC
 
 ##############################Task 4 ################################
 
-SELECT SUM(cumulative_confirmed) AS total_confirmed_cases, sum(cumulative_deceased) as total_deaths, 
-(sum(cumulative_deceased)/SUM(cumulative_confirmed)*100) as case_fatality_ratio
-FROM `bigquery-public-data.covid19_open_data.covid19_open_data` 
-WHERE date between '2020-04-01' and '2020-04-30' and country_code='IT' 
-GROUP BY country_code
+SELECT SUM(cumulative_confirmed) AS total_confirmed_cases, SUM(cumulative_deceased) AS
+total_deaths, (SUM(cumulative_deceased)/SUM(cumulative_confirmed))*100 AS case_fatality_ratio
+FROM `bigquery-public-data.covid19_open_data.covid19_open_data`
+WHERE country_name="Italy" AND date BETWEEN "2020-04-01" AND "2020-04-30"
 
 
 ###############################Task 5 ###############################
