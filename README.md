@@ -1,13 +1,12 @@
 # google-cloud-labs 
 deployment files fixed versions
 
-<p>Most of the people faced errors in deployment files. So here are the files </p>
+Most of the people faced errors in deployment files. So here are the files 
 
-<h1>auth.yaml</h1>
-<h1>frontend-yaml</h1>
-<h1>hello.yaml</h1>
+#auth.yaml
+#frontend.yaml
+#hello.yaml
 
-<p>In three files paste whole code or just make some changes in existing file </p>
-
-<b>For example<b>
-    <p>
+#In three files paste the given whole code or just make some changes in existing files
+ 
+##Note: At first make the changes if it doesn't work then replace the code with the given one    
