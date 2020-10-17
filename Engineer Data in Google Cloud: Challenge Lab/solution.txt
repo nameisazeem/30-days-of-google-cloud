@@ -1,0 +1,89 @@
+NOTE:==== Don't run queries back to back. Wait untill the progress is completed
+
+
+
+In the Cloud Console, navigate to Menu > BigQuery.
+
+Click on More > Query settings under the Query Editor.
+
+Select "Set a destination table for query results" under Destination; Enter "taxi_training_data" as the Table name
+
+Click Save
+
+####RUN the below sql query in editor
+
+Select
+  pickup_datetime,
+  pickup_longitude AS pickuplon,
+  pickup_latitude AS pickuplat,
+  dropoff_longitude AS dropofflon,
+  dropoff_latitude AS dropofflat,
+  passenger_count AS passengers,
+  ( tolls_amount + fare_amount ) AS fare_amount
+FROM
+  `taxirides.historical_taxi_rides_raw`
+WHERE
+  trip_distance > 0
+  AND fare_amount >= 2.5
+  AND pickup_longitude > -75
+  AND pickup_longitude < -73
+  AND dropoff_longitude > -75
+  AND dropoff_longitude < -73
+  AND pickup_latitude > 40
+  AND pickup_latitude < 42
+  AND dropoff_latitude > 40
+  AND dropoff_latitude < 42
+  AND passenger_count > 0
+  AND RAND() < 999999 / 1031673361
+  
+  ################################Task 2###################################
+  
+  CREATE OR REPLACE MODEL taxirides.fare_model
+TRANSFORM(
+  * EXCEPT(pickup_datetime)
+
+  , ST_Distance(ST_GeogPoint(pickuplon, pickuplat), ST_GeogPoint(dropofflon, dropofflat)) AS euclidean
+  , CAST(EXTRACT(DAYOFWEEK FROM pickup_datetime) AS STRING) AS dayofweek
+  , CAST(EXTRACT(HOUR FROM pickup_datetime) AS STRING) AS hourofday
+)
+OPTIONS(input_label_cols=['fare_amount'], model_type='linear_reg') 
+AS
+
+SELECT * FROM taxirides.taxi_training_data
+
+################################Task 3########################################
+
+CREATE OR REPLACE TABLE taxirides.2015_fare_amount_predictions
+  AS
+SELECT * FROM ML.PREDICT(MODEL taxirides.fare_model,(
+  SELECT * FROM taxirides.report_prediction_data)
+)​
+
+
+                            OR (Task3)
+  
+  Again click on More > Query settings under the Query Editor.
+  Select "Set a destination table for query results" under Destination; Enter "2015_fare_amount_predictions" as the Table name                        
+  Select "overwrite" Radio button below tabel name
+  SAVE IT
+  
+  ######### Run the query
+  
+  SELECT
+  *
+FROM
+  ML.PREDICT(MODEL `taxirides.fare_model`,
+    (
+    WITH
+      taxitrips AS (
+      SELECT
+        *,
+        ST_Distance(ST_GeogPoint(pickuplon, pickuplat)   , ST_GeogPoint(dropofflon, dropofflat)) AS    euclidean
+      FROM
+        `taxirides.report_prediction_data` )
+    SELECT
+      *
+    FROM
+      taxitrips ))
+      
+ #################Lab has been finished#######################
