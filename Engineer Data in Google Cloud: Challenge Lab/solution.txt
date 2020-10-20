@@ -52,16 +52,7 @@ AS
 SELECT * FROM taxirides.taxi_training_data
 
 ################################Task 3########################################
-
-CREATE OR REPLACE TABLE taxirides.2015_fare_amount_predictions
-  AS
-SELECT * FROM ML.PREDICT(MODEL taxirides.fare_model,(
-  SELECT * FROM taxirides.report_prediction_data)
-)​
-
-
-                            OR (Task3)
-  
+ 
   Again click on More > Query settings under the Query Editor.
   Select "Set a destination table for query results" under Destination; Enter "2015_fare_amount_predictions" as the Table name                        
   Select "overwrite" Radio button below tabel name
