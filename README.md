@@ -10,3 +10,6 @@ Most of the people faced errors in deployment files. So here are the files
    * hello.yaml
  
 #### Note: At first make the changes in the existing files, if it doesn't work then replace the code with the given one
+
+
+![Sapien's github stats](https://github-readme-stats.vercel.app/api?username=nameisazeem&show_icons=true&theme=radical)
