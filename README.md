@@ -1,12 +1,12 @@
-# google-cloud-labs 
-deployment files fixed versions
+# Google-cloud-labs 
+  * deployment files fixed versions
 
-# Solutions for all the qwiklabs will be found here
+## Solutions for all the qwiklabs will be found here
 
 Most of the people faced errors in deployment files. So here are the files 
 
-<b>auth.yaml</b>
-<b>frontend.yaml</b>
-<b>hello.yaml</b>
+   * auth.yaml
+   * frontend.yaml
+   * hello.yaml
  
-<b>Note: At first make the changes in the existing files, if it doesn't work then replace the code with the given one </b>
+###Note: At first make the changes in the existing files, if it doesn't work then replace the code with the given one
