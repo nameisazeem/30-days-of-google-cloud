@@ -1,7 +1,10 @@
 Insights From Data with Bigquery : Challenge Lab
 
-Many people getting error in this lab in <b>Task 3</b> and <b> Task 9</b>
-Paste the below codes in Query editor for their respective tasks
+1. Goto Navigation Menu > Bigquery
+2. Look For Add Data > public data set.
+3. Search for "covid-19 open data" > click on first options u see
+4. Click on Manage Dataset
+5. Then Run the queries one by one
 
 ##############################Task 1#############################
 
