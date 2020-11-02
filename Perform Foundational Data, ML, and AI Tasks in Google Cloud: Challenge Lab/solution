@@ -1,0 +1,129 @@
+For the 4th task in this lab you can do atleast one from three. It's optional.
+
+                                    ###################################Task 4#################################
+                                    
+                                    
+Q:    Use Google Cloud Speech API to analyze the audio file gs://cloud-training/gsp323/task4.flac. 
+      Once you have analyzed the file you can upload the resulting analysis to gs://YOUR_PROJECT-marking/task4-gcs.result.
+
+For the above task refer (Google Cloud Speech API: Qwik Start) lab :
+
+  1. To create an API key, click Navigation menu > APIs & services > Credentials:
+  2. Then click Create credentials
+  3. In the drop down menu, select API key
+  4. Copy the key you just generated, then click RESTRICT KEY
+  5. In the Cloud shell type " export API_KEY=<YOUR_API_KEY> " 
+        replace <YOUR_API_KEY> with the API KEY you copied before
+  6. create a file with the given command --> " touch request.json "
+  7. paste the following code in the request.json file
+ 
+ 
+{
+  "config": {
+      "encoding":"FLAC",
+      "languageCode": "en-US"
+  },
+  "audio": {
+      "uri":"gs://cloud-training/gsp323/task4.flac"
+  }
+}
+  
+  
+   *** save it and exit 
+   Paste the below commands as it is. Don't change anything.
+   
+   8. curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json "https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}"
+   
+   9. curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json "https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" > task4-gcs.result
+   
+  10. gsutil cp task4-gcs.result gs://YOUR-PROJECT-marking/task4-gcs.result    (Replace "YOUR-PROJECT" with your project id)
+  
+  
+                                    ----------Task completed wait for sometime and check the progress----------
+  
+  
+                                                                                   OR
+                                                                
+   Q  :     Use the Cloud Natural Language API to analyze the sentence from text about Odin. 
+            The text you need to analyze is "Old Norse texts portray Odin as one-eyed and long-bearded, frequently wielding a spear named Gungnir and wearing a cloak and a broad hat." 
+            Once you have analyzed the text you can upload the resulting analysis to gs://YOUR_PROJECT-marking/task4-cnl.result                                                             
+               
+        
+    For this task refer (Cloud Natural Language API: Qwik Start) lab
+    
+Open cloud shell paste the following commands:
+
+   1.   export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value core/project)
+   
+   2.   gcloud iam service-accounts create my-natlang-sa --display-name "my natural language service account" 
+   
+   3.   gcloud iam service-accounts keys create ~/key.json --iam-account my-natlang-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+   
+   4.   export GOOGLE_APPLICATION_CREDENTIALS="/home/USER/key.json"
+   
+   5.   gcloud ml language analyze-entities --content="Old Norse texts portray Odin as one-eyed and long-bearded, frequently wielding a spear named Gungnir and wearing a cloak and a broad hat." > task4-cnl.result
+   
+   6.   gsutil cp task4-cnl.result gs://YOUR-PROJECT-marking/task4-cnl.result  (Replace "YOUR-PROJECT" with your project id)
+   
+                                  -----------------------------Task completed------------------------------
+                              
+                                                                                    OR
+                                                                                        
+     
+     Q  :   Use Google Video Intelligence and detect all text on the video gs://spls/gsp154/video/train.mp4. 
+            Once you have completed the processing of the video, 
+            pipe the output into a file and upload to gs://YOUR_PROJECT-marking/task4-gvi.result.   
+            
+            
+      For the above task refer (Video Intelligence: Qwik Start) lab
+      
+     Paste the following commands in the cloud shell:
+        
+        1.  gcloud iam service-accounts create quickstart
+       
+        2.  gcloud iam service-accounts keys create key.json --iam-account quickstart@<your-project-123>.iam.gserviceaccount.com
+        
+        3.  gcloud auth activate-service-account --key-file key.json
+        
+        4.  gcloud auth print-access-token
+        
+        5.  create " request.json " file with ( nano or vi or edit ) editors
+        
+        6.  Paste the folloing code in the request.json
+                  
+    
+{
+   "inputUri":"gs://spls/gsp154/video/train.mp4",
+   "features": [
+       "LABEL_DETECTION"
+   ]
+}
+
+
+      7.  curl -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '$(gcloud auth print-access-token)'' 'https://videointelligence.googleapis.com/v1/videos:annotate' -d @request.json
+      
+      8.  curl -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '$(gcloud auth print-access-token)'' 'https://videointelligence.googleapis.com/v1/operations/OPERATION_NAME'
+    
+      9.  After giving some time re run the above command i.e. 8th one
+      
+      10. curl -s -H 'Content-Type: application/json' -H 'Authorization: Bearer '$(gcloud auth print-access-token)'' 'https://videointelligence.googleapis.com/v1/videos:annotate' -d @request.json > task4-gvi.result
+      
+      11. gsutil cp task4-gvi.result gs://<YOUR-PROJECT_ID>-marking/task4-gvi.result
+      
+      
+      
+                 -----------------------------------------------Task completed --------------------------------------------------
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
